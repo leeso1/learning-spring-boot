@@ -1,0 +1,36 @@
+# Application
+spring:
+  application:
+    name: LearningSpringBoot
+  security:
+    user:
+      name: admin
+      password: 1
+
+# Logging Level
+logging:
+  level:
+    io:
+      netty: DEBUG
+      reactor: DEBUG
+      me:
+        learning:
+          springboot: DEBUG
+
+# Management Server
+management:
+  server:
+    port: 8081
+    address: 127.0.0.1
+  endpoints:
+    web:
+      exposure:
+        exclude: env,beans
+        include: '*'
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+    metrics:
+      enabled: true
