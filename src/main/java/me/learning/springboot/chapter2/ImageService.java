@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 
 import reactor.core.publisher.Flux;
@@ -55,7 +56,25 @@ public class ImageService {
     return Mono.fromSupplier(
         () -> resourceLoader.getResource(UPLOAD_ROOT + "/" + fileName));
   }
-  
-  
+
+  /**
+   * Creating a image file
+   */
+  public Mono<Void> createImage(Flux<FilePart> files) {
+    return files.flatMap(file -> file.transferTo(
+            Paths.get(UPLOAD_ROOT, file.filename()).toFile())).then();
+  }
+
+  public Mono<Void> deleteImage(String fileName) {
+    return Mono.fromRunnable(() -> {
+      try {
+        Files.deleteIfExists(Paths.get(UPLOAD_ROOT, fileName));
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+        throw new RuntimeException(e);
+      }
+    });
+  }
 
 }
