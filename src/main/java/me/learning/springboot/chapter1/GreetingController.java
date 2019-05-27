@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-public class HomeController {
+public class GreetingController {
 
     @GetMapping
     public String greeting(
