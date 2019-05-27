@@ -3,10 +3,10 @@ package me.learning.springboot.chapter2;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -40,4 +40,14 @@ public class HomeController {
              }
            });
   }
+
+  @PostMapping(value = BASE_PATH)
+  public Mono<String> createFile(
+          @RequestPart(name = "file") Flux<FilePart> files) {
+    return imageService.createImage(files)
+                   .then(Mono.just("redirect:/"));
+  }
+
+  @DeleteMapping(value = BASE_PATH + "/" + FILENAME)
+  public Mono<Void>
 }
