@@ -21,10 +21,11 @@ public class ImageService {
 
   private static String UPLOAD_ROOT = "/Users/leesoch/IdeaProjects/images";
 
-  private static ResourceLoader resourceLoader;
+  private final ResourceLoader resourceLoader;
 
   public ImageService(ResourceLoader resourceLoader) {
     this.resourceLoader = resourceLoader;
+    LOG.info("-------> Created ImageService");
   }
 
   /**
