@@ -14,7 +14,7 @@ import java.io.IOException;
 @Controller
 public class HomeController {
 
-  private static final String BASE_PATH = "/images/";
+  private static final String BASE_PATH = "/images";
   private static final String FILENAME = "{filename:.+}";
 
   private final ImageService imageService;
@@ -23,7 +23,7 @@ public class HomeController {
     this.imageService = imageService;
   }
 
-  @GetMapping(value = BASE_PATH + FILENAME + "/raw", produces = MediaType.IMAGE_JPEG_VALUE)
+  @GetMapping(value = BASE_PATH + "/" + FILENAME + "/raw", produces = MediaType.IMAGE_JPEG_VALUE)
   @ResponseBody
   public Mono<ResponseEntity<?>> oneRawImage(
           @PathVariable String fileName) {

@@ -25,12 +25,11 @@ public class ImageService {
 
   public ImageService(ResourceLoader resourceLoader) {
     this.resourceLoader = resourceLoader;
-    LOG.info("-------> Created ImageService");
+    LOG.info("Created ImageService");
   }
 
   /**
    * Finding all images
-   * 
    * @return image list
    */
   public Flux<Image> findAllImages() {
@@ -47,10 +46,8 @@ public class ImageService {
   }
 
   /**
-   * Find a image file
-   * 
-   * @param fileName
-   *          - image file name
+   * Finding a image file
+   * @param fileName - image file name
    * @return image file
    */
   public Mono<Resource> getImageByName(String fileName) {
@@ -59,13 +56,20 @@ public class ImageService {
   }
 
   /**
-   * Creating a image file
+   * Creating image
+   * @param files - Part for uploading files
+   * @return Mono<Void>
    */
   public Mono<Void> createImage(Flux<FilePart> files) {
     return files.flatMap(file -> file.transferTo(
             Paths.get(UPLOAD_ROOT, file.filename()).toFile())).then();
   }
 
+  /**
+   * Deleting image
+   * @param fileName imnage name
+   * @return Mono<Void>
+   */
   public Mono<Void> deleteImage(String fileName) {
     return Mono.fromRunnable(() -> {
       try {
