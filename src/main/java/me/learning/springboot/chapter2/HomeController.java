@@ -1,15 +1,22 @@
 package me.learning.springboot.chapter2;
 
+import java.io.IOException;
+
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.io.IOException;
 
 @Controller
 public class HomeController {
@@ -47,7 +54,18 @@ public class HomeController {
     return imageService.createImage(files)
                    .then(Mono.just("redirect:/"));
   }
-
+  
   @DeleteMapping(value = BASE_PATH + "/" + FILENAME)
-  public Mono<Void>
+  public Mono<String> deleteFile(
+      @PathVariable String fileName) {
+    return imageService.deleteImage(fileName)
+        .then(Mono.just("redirect:/"));
+  }
+  
+  @GetMapping("/")
+  public Mono<String> index(Model model) {
+    model.addAttribute("images", imageService.findAllImages());
+    return Mono.just("index");
+  }
+  
 }

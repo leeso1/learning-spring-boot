@@ -29,3 +29,7 @@ dependencies {
     //testImplementation 'org.springframework.security:spring-security-test'
     annotationProcessor 'org.projectlombok:lombok'
 }
+
+bootJar {
+  launchScript()
+}

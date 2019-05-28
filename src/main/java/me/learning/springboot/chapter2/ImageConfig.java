@@ -1,5 +1,11 @@
 package me.learning.springboot.chapter2;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -8,18 +14,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.FileSystemUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 @Configuration
 public class ImageConfig {
 
     private static Logger LOG = LoggerFactory.getLogger(ImageConfig.class);
 
-    private static String UPLOAD_ROOT = "/Users/leesoch/IdeaProjects/images";
+    private static String UPLOAD_ROOT = "upload-img";
 
     @Bean
     public CommandLineRunner setUp() throws IOException {
