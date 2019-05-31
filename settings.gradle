@@ -3,4 +3,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'learning-spring-boot'
+rootProject.name = 'learning-spring-webflux'
