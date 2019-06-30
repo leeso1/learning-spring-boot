@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 @Document(collection = "employees")
 public class Employee {
-  
-  @Id 
-  private String id;
-  
-  private String firstName;
-  
-  private String lastName;
+
+    @Id
+    private String id;
+
+    private String firstName;
+
+    private String lastName;
 }

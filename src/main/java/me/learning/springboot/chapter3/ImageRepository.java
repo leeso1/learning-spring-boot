@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface ImageRepository extends ReactiveCrudRepository<Image, String> {
 
-  public Mono<Image> findByName(String name);
-  
+    public Mono<Image> findByName(String name);
+
 }

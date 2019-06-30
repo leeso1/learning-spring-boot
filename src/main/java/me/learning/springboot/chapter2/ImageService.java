@@ -17,69 +17,71 @@ import reactor.core.publisher.Mono;
 @Service
 public class ImageService {
 
-  private static Logger LOG = LoggerFactory.getLogger(ImageService.class);
+    private static Logger LOG = LoggerFactory.getLogger(ImageService.class);
 
-  private static String UPLOAD_ROOT = "/Users/leesoch/IdeaProjects/images";
+    private static String UPLOAD_ROOT = "/Users/leesoch/IdeaProjects/images";
 
-  private final ResourceLoader resourceLoader;
+    private final ResourceLoader resourceLoader;
 
-  public ImageService(ResourceLoader resourceLoader) {
-    this.resourceLoader = resourceLoader;
-    LOG.info("Created ImageService");
-  }
-
-  /**
-   * Finding all images
-   * @return image list
-   */
-  public Flux<Image> findAllImages() {
-    try {
-      return Flux.fromIterable(
-          Files.newDirectoryStream(Paths.get(UPLOAD_ROOT)))
-          .map(path -> new Image(
-              String.valueOf(path.hashCode()),
-              path.getFileName().toString()));
-    } 
-    catch (IOException e) {
-      return Flux.empty();
+    public ImageService(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+        LOG.info("Created ImageService");
     }
-  }
 
-  /**
-   * Finding a image file
-   * @param fileName - image file name
-   * @return image file
-   */
-  public Mono<Resource> getImageByName(String fileName) {
-    return Mono.fromSupplier(
-        () -> resourceLoader.getResource(UPLOAD_ROOT + "/" + fileName));
-  }
+    /**
+     * Finding all images
+     *
+     * @return image list
+     */
+    public Flux<Image> findAllImages() {
+        try {
+            return Flux.fromIterable(
+                    Files.newDirectoryStream(Paths.get(UPLOAD_ROOT)))
+                    .map(path -> new Image(
+                            String.valueOf(path.hashCode()),
+                            path.getFileName().toString()));
+        } catch (IOException e) {
+            return Flux.empty();
+        }
+    }
 
-  /**
-   * Creating image
-   * @param files - Part for uploading files
-   * @return Mono<Void>
-   */
-  public Mono<Void> createImage(Flux<FilePart> files) {
-    return files.flatMap(file -> file.transferTo(
-            Paths.get(UPLOAD_ROOT, file.filename()).toFile())).then();
-  }
+    /**
+     * Finding a image file
+     *
+     * @param fileName - image file name
+     * @return image file
+     */
+    public Mono<Resource> getImageByName(String fileName) {
+        return Mono.fromSupplier(
+                () -> resourceLoader.getResource(UPLOAD_ROOT + "/" + fileName));
+    }
 
-  /**
-   * Deleting image
-   * @param fileName imnage name
-   * @return Mono<Void>
-   */
-  public Mono<Void> deleteImage(String fileName) {
-    return Mono.fromRunnable(() -> {
-      try {
-        Files.deleteIfExists(Paths.get(UPLOAD_ROOT, fileName));
-      }
-      catch (IOException e) {
-        e.printStackTrace();
-        throw new RuntimeException(e);
-      }
-    });
-  }
+    /**
+     * Creating image
+     *
+     * @param files - Part for uploading files
+     * @return Mono<Void>
+     */
+    public Mono<Void> createImage(Flux<FilePart> files) {
+        return files.flatMap(file -> file.transferTo(
+                Paths.get(UPLOAD_ROOT, file.filename()).toFile())).then();
+    }
+
+    /**
+     * Deleting image
+     *
+     * @param fileName imnage name
+     * @return Mono<Void>
+     */
+    public Mono<Void> deleteImage(String fileName) {
+        return Mono.fromRunnable(() -> {
+            try {
+                Files.deleteIfExists(Paths.get(UPLOAD_ROOT, fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
 }

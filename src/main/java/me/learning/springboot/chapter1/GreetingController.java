@@ -12,6 +12,6 @@ public class GreetingController {
     @GetMapping
     public String greeting(
             @RequestParam(name = "name", required = false) Optional<String> name) {
-            return "Hey" + name.map(e -> " ," + e + "!").orElse("!");
+        return "Hey" + name.map(e -> " ," + e + "!").orElse("!");
     }
 }

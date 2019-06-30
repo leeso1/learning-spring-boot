@@ -11,10 +11,10 @@ public class LearningSpringBootApplication {
     public static void main(String[] args) {
         SpringApplication.run(LearningSpringBootApplication.class, args);
     }
-    
+
     @Bean
     HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-      return new HiddenHttpMethodFilter();
+        return new HiddenHttpMethodFilter();
     }
 
 }

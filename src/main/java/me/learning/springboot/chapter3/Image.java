@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 @Document(collection = "images")
 public class Image {
-  
-  @Id
-  private final String id;
-  private final String name;
-  
+
+    @Id
+    private final String id;
+    private final String name;
+
 }

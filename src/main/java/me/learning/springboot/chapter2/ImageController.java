@@ -15,11 +15,11 @@ public class ImageController {
 
     @GetMapping(value = "/images", produces = MediaType.APPLICATION_JSON_VALUE)
     Flux<Image> images() {
-      LOG.info("");
-      return Flux.just(
-              new Image("1", "learning-spring-boot-cover.jpg"),
-              new Image("2", "learning-spring-boot-2nd-edition-cover.jpg"),
-              new Image("3", "bazinga.png")
-      );
+        LOG.info("");
+        return Flux.just(
+                new Image("1", "learning-spring-boot-cover.jpg"),
+                new Image("2", "learning-spring-boot-2nd-edition-cover.jpg"),
+                new Image("3", "bazinga.png")
+        );
     }
 }
